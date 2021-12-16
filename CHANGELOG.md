@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/panels-land/scripts/compare/v1.0.0...v1.0.1) (2021-12-16)
+
+
+### Bug Fixes
+
+* make bin executable ([f777487](https://github.com/panels-land/scripts/commit/f777487905ddf9635938754e1bf759a1fdc156a6))
+
 # 1.0.0 (2021-12-16)
 
 
