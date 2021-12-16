@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/panels-land/scripts/compare/v1.1.1...v1.1.2) (2021-12-16)
+
+
+### Bug Fixes
+
+* remove peer and optional dependencies from ghost pkg ([c9205e3](https://github.com/panels-land/scripts/commit/c9205e384b1889bc7b73a1094815a2e5c891460e))
+
 ## [1.1.1](https://github.com/panels-land/scripts/compare/v1.1.0...v1.1.1) (2021-12-16)
 
 
