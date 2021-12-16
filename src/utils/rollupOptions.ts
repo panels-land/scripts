@@ -17,7 +17,6 @@ const pkgJson = JSON.parse(fs.readFileSync('package.json', 'utf8'))
 export const inputOptions: RollupOptions = {
   input: 'panels.ts',
   external: id => !(id.startsWith('.') || path.isAbsolute(id)),
-  treeshake: 'smallest',
   plugins: [
     del({
       targets: ['build/**/*'],
@@ -28,7 +27,7 @@ export const inputOptions: RollupOptions = {
         autoprefixer,
         tailwindcss({
           important: `[data-panel="${pkgJson.name}"]`,
-          content: ['**/*.{ts,tsx}', '!build/**', '!node_modules/**'],
+          content: ['**/*.{ts,tsx,js,jsx}', '!build/**', '!node_modules/**'],
           corePlugins: {
             preflight: false,
           },
