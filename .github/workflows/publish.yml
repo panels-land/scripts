@@ -1,0 +1,56 @@
+name: 🚀 publish
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  release:
+    name: 🚀 publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: 💾 caching
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: 🛢️ checkout
+        uses: actions/checkout@v2
+
+      - name: 🤖 node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+
+      - name: 🤖 install dependencies
+        run: npm ci
+
+      - name: 📝 lint
+        run: npm run lint
+
+      - name: 🔨 build
+        run: npm run build
+
+      - name: 🚀 publish
+        run: npm run semantic-release
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIT_AUTHOR_NAME: "panels-bot"
+          GIT_AUTHOR_EMAIL: "system@panels.land"
+          GIT_COMMITTER_NAME: "panels-bot"
+          GIT_COMMITTER_EMAIL: "system@panels.land"
+
+      - name: 👻 ghost publish
+        run: |
+          npm i -g underscore-cli
+          underscore -i package.json process "delete data.dependencies; delete data.devDependencies; delete data.main; data.publishConfig.registry = 'https://registry.panels.land'; data;" -o package.json
+          echo "*" > .npmignore
+          echo "//registry.panels.land/:_authToken=${NPM_TOKEN}" > .npmrc
+          npm publish
+        env:
+          NPM_TOKEN: ${{ secrets.PANELS_NPM_AUTH_TOKEN }}

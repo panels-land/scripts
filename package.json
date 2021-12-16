@@ -1,0 +1,87 @@
+{
+  "name": "@panels/scripts",
+  "version": "1.0.0",
+  "description": "Bundle scripts for panels",
+  "main": "build/index.js",
+  "type": "commonjs",
+  "bin": {
+    "panel": "build/index.js"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -cw",
+    "lint": "eslint --ext ts,tsx --max-warnings 0 src",
+    "commit": "cz",
+    "semantic-release": "semantic-release"
+  },
+  "repository": "github:panels-land/scripts",
+  "homepage": "https://github.com/panels-land/scripts#readme",
+  "keywords": ["panels"],
+  "author": "Torsten Blindert",
+  "license": "MIT",
+  "devDependencies": {
+    "@panels/eslint-config": "^1.5.0",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "@types/node": "^16.11.12",
+    "@types/yargs": "^17.0.7",
+    "cz-conventional-changelog": "^3.3.0",
+    "typescript": "^4.5.4"
+  },
+  "prettier": "@panels/eslint-config/prettier",
+  "eslintConfig": {
+    "extends": [
+      "@panels"
+    ]
+  },
+  "dependencies": {
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-typescript": "^8.3.0",
+    "@rollup/plugin-virtual": "^2.0.3",
+    "autoprefixer": "^10.4.0",
+    "babel-preset-solid": "^1.2.6",
+    "chalk": "^4.1.2",
+    "glob": "^7.2.0",
+    "rollup": "^2.61.1",
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-postcss": "^4.0.2",
+    "tailwindcss": "^3.0.2",
+    "yargs": "^17.3.0"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogFile": "CHANGELOG.md"
+        }
+      ],
+      "@semantic-release/npm",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "CHANGELOG.md",
+            "package.json",
+            "package-lock.json"
+          ],
+          "message": "chore(release): 🚀 ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ],
+      "@semantic-release/github"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
