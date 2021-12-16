@@ -48,7 +48,7 @@ jobs:
       - name: 👻 ghost publish
         run: |
           npm i -g underscore-cli
-          underscore -i package.json process "delete data.dependencies; delete data.devDependencies; delete data.main; data.publishConfig.registry = 'https://registry.panels.land'; data;" -o package.json
+          underscore -i package.json process "delete data.dependencies; delete data.devDependencies; delete data.peerDependencies; delete data.optionalDependencies; delete data.main; data.publishConfig.registry = 'https://registry.panels.land'; data;" -o package.json
           echo "*" > .npmignore
           echo "//registry.panels.land/:_authToken=${NPM_TOKEN}" > .npmrc
           npm publish
