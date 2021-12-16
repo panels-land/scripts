@@ -1,4 +1,3 @@
-import crypto from 'crypto'
 import fs from 'fs'
 import path from 'path'
 
@@ -28,11 +27,7 @@ export const inputOptions: RollupOptions = {
       plugins: [
         autoprefixer,
         tailwindcss({
-          important: `.panel-${crypto
-            .createHash('md5')
-            .update(pkgJson.name)
-            .digest('hex')
-            .substring(0, 8)}`,
+          important: `[data-panel="${pkgJson.name}"]`,
           content: ['**/*.{ts,tsx}', '!build/**', '!node_modules/**'],
           corePlugins: {
             preflight: false,
