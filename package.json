@@ -16,7 +16,9 @@
   },
   "repository": "github:panels-land/scripts",
   "homepage": "https://github.com/panels-land/scripts#readme",
-  "keywords": ["panels"],
+  "keywords": [
+    "panels"
+  ],
   "author": "Torsten Blindert",
   "license": "MIT",
   "devDependencies": {
