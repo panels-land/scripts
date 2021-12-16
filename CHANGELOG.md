@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/panels-land/scripts/compare/v1.1.0...v1.1.1) (2021-12-16)
+
+
+### Bug Fixes
+
+* don't treeshake styles ([780abdf](https://github.com/panels-land/scripts/commit/780abdf0fcc651e711e198949f886a9ae11f0205))
+
 # [1.1.0](https://github.com/panels-land/scripts/compare/v1.0.1...v1.1.0) (2021-12-16)
 
 
