@@ -1,3 +1,4 @@
+import fs from 'fs/promises'
 import path from 'path'
 
 import typescript from '@rollup/plugin-typescript'
@@ -11,5 +12,12 @@ export default defineConfig({
     banner: '#!/usr/bin/env node',
   },
   external: id => !(id.startsWith('.') || path.isAbsolute(id)),
-  plugins: [typescript()],
+  plugins: [
+    typescript(),
+    {
+      async writeBundle(options) {
+        await fs.chmod(options.file, '755')
+      },
+    },
+  ],
 })
