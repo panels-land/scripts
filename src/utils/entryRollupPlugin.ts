@@ -118,7 +118,7 @@ export const entryRollupPlugin = (): Plugin => {
           )
 
           code.push(`
-            const { default: ${name}ConfigPanel, ...${name}ConfgRest } = ${name}ConfigData
+            const { default: ${name}ConfigPanel, ...${name}ConfigRest } = ${name}ConfigData
             Object.assign(${name}, {
               config: {
                 component: ${name}ConfigPanel,
