@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/panels-land/scripts/compare/v1.1.2...v1.1.3) (2021-12-19)
+
+
+### Bug Fixes
+
+* removed critical typo ([4568eea](https://github.com/panels-land/scripts/commit/4568eea8bc7d3d46c53d81c4b4782218f8dc9453))
+
 ## [1.1.2](https://github.com/panels-land/scripts/compare/v1.1.1...v1.1.2) (2021-12-16)
 
 
