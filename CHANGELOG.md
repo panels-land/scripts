@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/panels-land/scripts/compare/v1.1.3...v1.2.0) (2021-12-22)
+
+
+### Features
+
+* introduce defaultConfig ([af8b2b4](https://github.com/panels-land/scripts/commit/af8b2b43a5711ecd0e0b9f5fc5e4a1422fef9ece))
+
 ## [1.1.3](https://github.com/panels-land/scripts/compare/v1.1.2...v1.1.3) (2021-12-19)
 
 
