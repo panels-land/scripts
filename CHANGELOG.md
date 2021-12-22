@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/panels-land/scripts/compare/v1.2.0...v1.3.0) (2021-12-22)
+
+
+### Features
+
+* introduce sizes, validation moved to zod ([92c9bd8](https://github.com/panels-land/scripts/commit/92c9bd806d5478aab9fa7c064c6543227c10550f))
+
 # [1.2.0](https://github.com/panels-land/scripts/compare/v1.1.3...v1.2.0) (2021-12-22)
 
 
