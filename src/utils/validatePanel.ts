@@ -2,53 +2,35 @@ import chalk from 'chalk'
 import type { Node } from 'estree'
 import type { ModuleInfo } from 'rollup'
 
+import * as schemas from './schemas'
 import { validatePanelAst } from './validatePanelAst'
 
 export const validatePanel = (info: ModuleInfo, name: string) =>
   validatePanelAst(name, info.ast as Node, {
-    defaultConfig: declaration => {
-      if (
-        declaration.type === 'FunctionDeclaration' ||
-        !('name' in declaration.id)
-      ) {
-        return
-      }
-
-      if (!declaration.init) {
+    sizes: declaration => {
+      try {
+        schemas.panel.size.parse(declaration)
+      } catch {
         return {
-          error: chalk`the export {bold ${declaration.id.name}} of {bold ${name}} needs a value.`,
+          error: chalk`the export {bold sizes} of {bold ${name}} has an invalid shape`,
         }
       }
-
-      if (
-        declaration.init.type !== 'ObjectExpression' &&
-        declaration.init.type !== 'ArrowFunctionExpression'
-      ) {
+    },
+    defaultConfig: declaration => {
+      try {
+        schemas.panel.defaultConfig.parse(declaration)
+      } catch {
         return {
-          error: chalk`the export {bold ${declaration.id.name}} of {bold ${name}} has an invalid type. Only object expressions and arrow functions are allowed.`,
+          error: chalk`the export {bold defaultConfig} of {bold ${name}} has an invalid shape`,
         }
       }
     },
     description: declaration => {
-      if (
-        declaration.type === 'FunctionDeclaration' ||
-        !('name' in declaration.id)
-      ) {
-        return
-      }
-
-      if (!declaration.init) {
+      try {
+        schemas.panel.description.parse(declaration)
+      } catch {
         return {
-          error: chalk`the export {bold ${declaration.id.name}} of {bold ${name}} needs a value.`,
-        }
-      }
-
-      if (
-        declaration.init.type !== 'Literal' &&
-        declaration.init.type !== 'ArrowFunctionExpression'
-      ) {
-        return {
-          error: chalk`the export {bold ${declaration.id.name}} of {bold ${name}} has an invalid type. Only string literals and arrow functions are allowed.`,
+          error: chalk`the export {bold description} of {bold ${name}} has an invalid shape`,
         }
       }
     },
