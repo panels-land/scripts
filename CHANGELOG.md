@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/panels-land/scripts/compare/v1.3.1...v1.3.2) (2021-12-23)
+
+
+### Bug Fixes
+
+* ease strictness on sizes export again ([a64bfd7](https://github.com/panels-land/scripts/commit/a64bfd75edad43d101169ace1b698b7397a85fc6))
+
 ## [1.3.1](https://github.com/panels-land/scripts/compare/v1.3.0...v1.3.1) (2021-12-23)
 
 
