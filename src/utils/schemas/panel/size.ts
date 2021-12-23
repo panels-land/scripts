@@ -75,8 +75,7 @@ export const size = z.object({
           ]),
         })
         .array()
-        .length(2)
-        .refine(value => new Set(value.map(v => v.key.name)).size === 2),
+        .length(2),
     }),
   ]),
 })
