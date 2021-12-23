@@ -74,8 +74,7 @@ export const size = z.object({
             }),
           ]),
         })
-        .array()
-        .length(2),
+        .array(),
     }),
   ]),
 })
