@@ -1,6 +1,6 @@
 {
   "name": "@panels/scripts",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "Bundle scripts for panels",
   "main": "build/index.js",
   "type": "commonjs",
