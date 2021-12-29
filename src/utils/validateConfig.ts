@@ -1,12 +1,12 @@
 import chalk from 'chalk'
 import type { Node } from 'estree'
-import type { ModuleInfo } from 'rollup'
+import type { AcornNode } from 'rollup'
 
 import * as schemas from './schemas'
 import { validatePanelAst } from './validatePanelAst'
 
-export const validateConfig = (info: ModuleInfo, name: string) =>
-  validatePanelAst(name, info.ast as Node, {
+export const validateConfig = (ast: AcornNode, name: string) =>
+  validatePanelAst(name, ast as Node, {
     size: declaration => {
       try {
         schemas.config.size.parse(declaration)

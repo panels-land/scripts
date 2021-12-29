@@ -1,7 +1,6 @@
+import fs from 'fs/promises'
 import { promisify } from 'util'
 
-// @ts-ignore
-import virtual from '@rollup/plugin-virtual'
 import chalk from 'chalk'
 import _glob from 'glob'
 import type { Plugin } from 'rollup'
@@ -11,8 +10,9 @@ import { validatePanel } from './validatePanel'
 
 const glob = promisify(_glob)
 
-export const entryRollupPlugin = (): Plugin => {
-  let virtualisedEntry: any
+export const entryRollupPlugin = (
+  mode: 'development' | 'production'
+): Plugin => {
   const panelsFiles: Array<string> = []
 
   const warnings: Array<string> = []
@@ -20,7 +20,20 @@ export const entryRollupPlugin = (): Plugin => {
 
   return {
     name: 'panels',
-    async buildStart() {
+    resolveId(id) {
+      if (id === '__PANELS__.ts') {
+        return { id, external: false }
+      }
+    },
+    async load(id) {
+      if (id !== '__PANELS__.ts') {
+        return
+      }
+
+      const { name, version } = JSON.parse(
+        await fs.readFile('package.json', 'utf-8')
+      )
+
       const filesGlobPattern = 'panels/**/!(_).{js,ts,jsx,tsx}'
       let files = await glob(filesGlobPattern)
       if (files.length === 0) {
@@ -74,7 +87,10 @@ export const entryRollupPlugin = (): Plugin => {
       }
 
       const imports: Array<string> = []
-      const code: Array<string> = []
+      const code: Array<string> = [
+        `export const __version = "${version}"`,
+        `export const __pkgName = "${name}"`,
+      ]
 
       const processPanel = (name: string, path: string) => {
         imports.push(`import * as ${name}Data from './panels/${path}'`)
@@ -129,11 +145,7 @@ export const entryRollupPlugin = (): Plugin => {
         }
       }
 
-      const content = `${imports.join('\n')}\n${code.join('\n')}`
-
-      virtualisedEntry = virtual({
-        'panels.ts': content,
-      })
+      return `${imports.join('\n')}\n${code.join('\n')}`
     },
     buildEnd() {
       if (warnings.length > 0 || errors.length > 0) {
@@ -154,27 +166,23 @@ export const entryRollupPlugin = (): Plugin => {
         )
       }
     },
-    resolveId(id, importer) {
-      return virtualisedEntry && virtualisedEntry.resolveId(id, importer)
-    },
 
-    load(id) {
-      return virtualisedEntry && virtualisedEntry.load(id)
-    },
     moduleParsed(info) {
+      if (mode === 'development') {
+        return
+      }
       const panelFile = panelsFiles.find(file => info.id.endsWith(file))
       if (!panelFile) {
         return
       }
 
       if (!info.ast) {
-        errors.push(chalk`file {bold ${info.id}} is not valid`)
         return
       }
 
       const result = info.id.match(/\/Config\.(tsx|jsx)$/i)
-        ? validateConfig(info, panelFile)
-        : validatePanel(info, panelFile)
+        ? validateConfig(info.ast, panelFile)
+        : validatePanel(info.ast, panelFile)
 
       warnings.push(...result.warnings)
       errors.push(...result.errors)

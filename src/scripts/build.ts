@@ -9,7 +9,7 @@ export const build = async () => {
   const now = performance.now()
   console.info(chalk.yellow('Creating production build…'))
   try {
-    const bundle = await rollup.rollup(inputOptions)
+    const bundle = await rollup.rollup(inputOptions('production'))
     await bundle.write(outputOptions)
 
     console.info(
@@ -19,7 +19,7 @@ export const build = async () => {
     )
   } catch (error) {
     if (error instanceof Error) {
-      console.error(error.message)
+      console.error(error)
       process.exit(1)
     }
     throw error
